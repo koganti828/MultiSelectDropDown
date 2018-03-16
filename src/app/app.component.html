@@ -1,0 +1,46 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    Welcome to {{ title }}!
+  </h1>
+</div>
+<div class="tristate-chk-container" >
+  <div class="tristate-search-box">
+    <input type="text"  class="tristate-search-input" placeholder="Search analyst..">
+    <i class="bottom-arrow-icon" (click)="arrowToggle($event)"></i>
+  </div>
+  <div id="tristate-chk-form" class="tristate-chk-form" (mouseout)="hiddenLevel3()">
+    <!--Select all box.-->
+    <div class="select-all-chk">
+        <input type="checkbox" (change)="checkAll($event.target.checked)" [checked]="allAnalyst"> All Analyst <br>
+    </div>
+    <!--First level tristate.-->
+  <div *ngFor="let data of analyst;index as i" class="tristate-chk-level1-container" >
+    <div class="tristate-chk-level1" (mouseover)="visibleLevel2($event,i)">
+      <input type="checkbox" (change)="oneLevelChange(data.id, $event.target.checked)" [attr.Id]="data.id" [checked]="data.checked">{{data.name}}
+      <br>
+    </div>
+    <!--second level tristate.-->
+    <div class="tristate-chk-level2-container" id="tristate-chk-level2-container-{{i}}" (mouseout)="hiddenLevel3()">
+      <div *ngFor="let childItems of data.childrens" class="tristate-chk-level2" (mouseover)="visibleLevel2($event,i)">
+        <input type="checkbox" (change)="twoLevelChange(data.id,childItems.id, $event.target.checked)" [attr.Id]="childItems.id" [checked]="childItems.checked">{{childItems.name}}
+        <br>
+      </div>
+    </div>
+  </div>
+
+    <br/>
+    <br/>
+
+    <div class="tristate-btn-container">
+          <div class="btn-clear" (click)="clearAll()">
+            <span>Clear</span>
+          </div>
+          <div class="btn-submit" (click)="submit()">
+              <span>Submit</span>
+          </div>
+    </div>
+  </div>
+
+<!-- <pre>Form values: {{myForm.value | json}}</pre> -->
+</div>
